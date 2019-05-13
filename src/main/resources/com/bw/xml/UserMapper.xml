@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.bw.entity.User">
+		<id column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="user_name" jdbcType="VARCHAR"
+			property="userName" />
+		<result column="pass_word" jdbcType="VARCHAR"
+			property="passWord" />
+		<result column="user_flag" jdbcType="TINYINT"
+			property="userFlag" />
+		<result column="user_delete" jdbcType="TINYINT"
+			property="userDelete" />
+		<result column="update_time" jdbcType="TIMESTAMP"
+			property="updateTime" />
+		<result column="update_by" jdbcType="BIGINT"
+			property="updateBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, user_name, pass_word, user_flag, user_delete, update_time, update_by
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tb_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.bw.entity.User">
+		insert into tb_user (user_id, user_name, pass_word,
+		user_flag, user_delete, update_time,
+		update_by)
+		values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+		#{passWord,jdbcType=VARCHAR},
+		#{userFlag,jdbcType=TINYINT}, #{userDelete,jdbcType=TINYINT}, #{updateTime,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.bw.entity.User">
+		insert into tb_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="passWord != null">
+				pass_word,
+			</if>
+			<if test="userFlag != null">
+				user_flag,
+			</if>
+			<if test="userDelete != null">
+				user_delete,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="passWord != null">
+				#{passWord,jdbcType=VARCHAR},
+			</if>
+			<if test="userFlag != null">
+				#{userFlag,jdbcType=TINYINT},
+			</if>
+			<if test="userDelete != null">
+				#{userDelete,jdbcType=TINYINT},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.bw.entity.User">
+		update tb_user
+		<set>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="passWord != null">
+				pass_word = #{passWord,jdbcType=VARCHAR},
+			</if>
+			<if test="userFlag != null">
+				user_flag = #{userFlag,jdbcType=TINYINT},
+			</if>
+			<if test="userDelete != null">
+				user_delete = #{userDelete,jdbcType=TINYINT},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=BIGINT},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.bw.entity.User">
+		update tb_user
+		set user_name = #{userName,jdbcType=VARCHAR},
+		pass_word = #{passWord,jdbcType=VARCHAR},
+		user_flag = #{userFlag,jdbcType=TINYINT},
+		user_delete = #{userDelete,jdbcType=TINYINT},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		update_by = #{updateBy,jdbcType=BIGINT}
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<!-- 普通按条件查询 -->
+	<select id="selectUsers" parameterType="hashmap"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		<where>
+			<trim suffixOverrides="and">
+				<if test="userId != null">
+					user_id=#{userId,jdbcType=BIGINT} and
+				</if>
+				<if test="userName != null">
+					user_name = #{userName,jdbcType=VARCHAR},
+				</if>
+				<if test="passWord != null">
+					pass_word = #{passWord,jdbcType=VARCHAR},
+				</if>
+				<if test="userFlag != null">
+					user_flag = #{userFlag,jdbcType=TINYINT},
+				</if>
+				<if test="userDelete != null">
+					user_delete = #{userDelete,jdbcType=TINYINT},
+				</if>
+				<if test="updateTime != null">
+					update_time = #{updateTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="updateBy != null">
+					update_by = #{updateBy,jdbcType=BIGINT},
+				</if>
+			</trim>
+		</where>
+	</select>
+	<select id="getUser" parameterType="User"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		where user_name = #{userName} and pass_word = #{passWord} and
+		user_flag=#{userFlag}
+	</select>
+	<select id="getUsers" 
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		where 1=1
+	</select>
+</mapper>

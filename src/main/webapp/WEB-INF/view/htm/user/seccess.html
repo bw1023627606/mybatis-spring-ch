@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contextPath=${#request.getContextPath()}+'/'">
+<head>
+<meta charset="UTF-8">
+<title>注册成功页面</title>
+<!-- REQUIRED JS SCRIPTS：必须引用的js库 -->
+<!--1、JQUERY-->
+<script
+	src="../../../static/admin-lte/bower_components/jquery/dist/jquery.min.js"
+	th:src="${contextPath}+'static/admin-lte/bower_components/jquery/dist/jquery.min.js'"></script>
+
+
+</head>
+
+<body>
+<div id="userNameId" th:text="${user.userName}" hidden="hidden"></div>
+<div id="passWordId" th:text="${user.passWord}" hidden="hidden"></div>
+<div id="path" th:text="${#request.getContextPath()}+'/'" hidden="hidden"></div>
+</body>
+<script type="text/javascript">
+	$(function(){
+	
+		var userName=$('#userNameId').text();
+		var passWord=$('#passWordId').text();
+		var path=$('#path').text();
+		if(confirm('注册成功，是否跳转登录页面'+'\n'+'用户姓名：'+userName+'\n'+'密码：'+passWord)==true){
+			/* $.get(path+"login"); */
+			window.location.href=path+'login';
+		}else{
+			/* $.get(path+"regist/page"); */
+			window.location.href=path+'register/page';
+		}
+	});
+</script>
+</html>

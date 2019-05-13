@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.dao.OpertionMapper">
+  <resultMap id="BaseResultMap" type="com.bw.entity.Opertion">
+    <id column="opertion_id" jdbcType="BIGINT" property="opertionId" />
+    <result column="opertion_code" jdbcType="VARCHAR" property="opertionCode" />
+    <result column="opertion_name" jdbcType="VARCHAR" property="opertionName" />
+    <result column="opertion_url" jdbcType="VARCHAR" property="opertionUrl" />
+    <result column="opertion_parent_id" jdbcType="BIGINT" property="opertionParentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    opertion_id, opertion_code, opertion_name, opertion_url, opertion_parent_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_opertion
+    where opertion_id = #{opertionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_opertion
+    where opertion_id = #{opertionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bw.entity.Opertion">
+    insert into tb_opertion (opertion_id, opertion_code, opertion_name, 
+      opertion_url, opertion_parent_id)
+    values (#{opertionId,jdbcType=BIGINT}, #{opertionCode,jdbcType=VARCHAR}, #{opertionName,jdbcType=VARCHAR}, 
+      #{opertionUrl,jdbcType=VARCHAR}, #{opertionParentId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.entity.Opertion">
+    insert into tb_opertion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="opertionId != null">
+        opertion_id,
+      </if>
+      <if test="opertionCode != null">
+        opertion_code,
+      </if>
+      <if test="opertionName != null">
+        opertion_name,
+      </if>
+      <if test="opertionUrl != null">
+        opertion_url,
+      </if>
+      <if test="opertionParentId != null">
+        opertion_parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="opertionId != null">
+        #{opertionId,jdbcType=BIGINT},
+      </if>
+      <if test="opertionCode != null">
+        #{opertionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionName != null">
+        #{opertionName,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionUrl != null">
+        #{opertionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionParentId != null">
+        #{opertionParentId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.entity.Opertion">
+    update tb_opertion
+    <set>
+      <if test="opertionCode != null">
+        opertion_code = #{opertionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionName != null">
+        opertion_name = #{opertionName,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionUrl != null">
+        opertion_url = #{opertionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="opertionParentId != null">
+        opertion_parent_id = #{opertionParentId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where opertion_id = #{opertionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.entity.Opertion">
+    update tb_opertion
+    set opertion_code = #{opertionCode,jdbcType=VARCHAR},
+      opertion_name = #{opertionName,jdbcType=VARCHAR},
+      opertion_url = #{opertionUrl,jdbcType=VARCHAR},
+      opertion_parent_id = #{opertionParentId,jdbcType=BIGINT}
+    where opertion_id = #{opertionId,jdbcType=BIGINT}
+  </update>
+</mapper>

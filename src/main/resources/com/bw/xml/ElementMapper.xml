@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.dao.ElementMapper">
+  <resultMap id="BaseResultMap" type="com.bw.entity.Element">
+    <id column="element_id" jdbcType="BIGINT" property="elementId" />
+    <result column="element_code" jdbcType="VARCHAR" property="elementCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    element_id, element_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_element
+    where element_id = #{elementId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_element
+    where element_id = #{elementId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bw.entity.Element">
+    insert into tb_element (element_id, element_code)
+    values (#{elementId,jdbcType=BIGINT}, #{elementCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.entity.Element">
+    insert into tb_element
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="elementId != null">
+        element_id,
+      </if>
+      <if test="elementCode != null">
+        element_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="elementId != null">
+        #{elementId,jdbcType=BIGINT},
+      </if>
+      <if test="elementCode != null">
+        #{elementCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.entity.Element">
+    update tb_element
+    <set>
+      <if test="elementCode != null">
+        element_code = #{elementCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where element_id = #{elementId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.entity.Element">
+    update tb_element
+    set element_code = #{elementCode,jdbcType=VARCHAR}
+    where element_id = #{elementId,jdbcType=BIGINT}
+  </update>
+</mapper>
